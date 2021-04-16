@@ -1,5 +1,6 @@
 enum: JOB_ASSASSIN
 name: "Assassin"
+short_name: As
 category: Warrior
 category_priority: 60
 str: 3

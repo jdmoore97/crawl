@@ -7325,7 +7325,7 @@ static void _mark_solid_squares()
 
 // Based on their starting class, where does the player start?
 int starting_absdepth()
-{
+{   
     if (you.char_class == JOB_DELVER)
         return 4;
     return 0; // (absdepth is 0-indexed)
