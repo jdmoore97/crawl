@@ -6,7 +6,7 @@ ARCH = unknown
 ifdef USE_LUAJIT
 SUBDIRS += luajit/src
 else
-SUBDIRS += lua/src
+SUBDIRS += lua_5.4/src
 endif
 
 all:

@@ -1648,7 +1648,7 @@ static int item_get(lua_State *ls)
     return 0;
 }
 
-static const struct luaL_reg item_lib[] =
+static const struct luaL_Reg item_lib[] =
 {
     { "inventory",         l_item_inventory },
     { "letter_to_index",   l_item_letter_to_index },
@@ -1691,5 +1691,12 @@ void cluaopen_item(lua_State *ls)
     // Pop the metatable off the stack.
     lua_pop(ls, 1);
 
-    luaL_openlib(ls, "items", item_lib, 0);
+    //luaL_openlib(ls, "items", item_lib, 0);
+    lua_getglobal(ls, "items");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, item_lib, 0);
+    lua_setglobal(ls, "items");
 }

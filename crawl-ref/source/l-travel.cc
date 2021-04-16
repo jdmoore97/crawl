@@ -142,7 +142,7 @@ LUAFN(l_set_waypoint)
     return 0;
 }
 
-static const struct luaL_reg travel_lib[] =
+static const struct luaL_Reg travel_lib[] =
 {
     { "set_exclude", l_set_exclude },
     { "del_exclude", l_del_exclude },
@@ -157,5 +157,12 @@ static const struct luaL_reg travel_lib[] =
 
 void cluaopen_travel(lua_State *ls)
 {
-    luaL_openlib(ls, "travel", travel_lib, 0);
+    //luaL_openlib(ls, "travel", travel_lib, 0);
+    lua_getglobal(ls, "travel");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, travel_lib, 0);
+    lua_setglobal(ls, "travel");
 }

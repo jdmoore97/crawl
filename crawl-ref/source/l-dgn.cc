@@ -1768,7 +1768,7 @@ LUAFN(dgn_fill_grd_area)
 
 LUAWRAP(dgn_apply_tide, shoals_apply_tides(0, true))
 
-const struct luaL_reg dgn_dlib[] =
+const struct luaL_Reg dgn_dlib[] =
 {
 { "reset_level", _dgn_reset_level },
 
@@ -1924,7 +1924,7 @@ LUAFN(_vp_exits)
     return clua_gentable(ls, (*vp)->exits, clua_pushpoint);
 }
 
-static const luaL_reg dgn_vaultplacement_ops[] =
+static const luaL_Reg dgn_vaultplacement_ops[] =
 {
     { "pos", _vp_pos },
     { "size", _vp_size },
@@ -1946,13 +1946,84 @@ void dluaopen_dgn(lua_State *ls)
 {
     _dgn_register_metatables(ls);
 
-    luaL_openlib(ls, "dgn", dgn_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_build_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_event_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_grid_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_item_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_level_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_mons_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_subvault_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_tile_dlib, 0);
+    //luaL_openlib(ls, "dgn", dgn_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_dlib, 0);
+    lua_setglobal(ls, "dgn");
+
+    //luaL_openlib(ls, "dgn", dgn_build_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_build_dlib, 0);
+    lua_setglobal(ls, "dgn");
+    
+    //luaL_openlib(ls, "dgn", dgn_event_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_event_dlib, 0);
+    lua_setglobal(ls, "dgn");
+
+    //luaL_openlib(ls, "dgn", dgn_grid_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_grid_dlib, 0);
+    lua_setglobal(ls, "dgn");
+
+    //luaL_openlib(ls, "dgn", dgn_item_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_item_dlib, 0);
+    lua_setglobal(ls, "dgn");
+
+    //luaL_openlib(ls, "dgn", dgn_level_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_level_dlib, 0);
+    lua_setglobal(ls, "dgn");
+
+    //luaL_openlib(ls, "dgn", dgn_mons_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_mons_dlib, 0);
+    lua_setglobal(ls, "dgn");
+
+    //luaL_openlib(ls, "dgn", dgn_subvault_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_subvault_dlib, 0);
+    lua_setglobal(ls, "dgn");
+
+    //luaL_openlib(ls, "dgn", dgn_tile_dlib, 0);
+    lua_getglobal(ls, "dgn");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, dgn_tile_dlib, 0);
+    lua_setglobal(ls, "dgn");
 }

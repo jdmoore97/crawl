@@ -628,7 +628,7 @@ endif
 
 ifndef BUILD_LUA
   ifndef LUA_PACKAGE
-    LUA_PACKAGE = lua5.1
+    LUA_PACKAGE = lua5.4
   endif
   INCLUDES_L += $(shell $(PKGCONFIG) $(LUA_PACKAGE) --cflags-only-I | sed -e 's/-I/-isystem /')
   CFLAGS_L  += $(shell $(PKGCONFIG) $(LUA_PACKAGE) --cflags-only-other)
@@ -1155,7 +1155,7 @@ ifdef USE_LUAJIT
 CONTRIBS += luajit/src
 CFOTHER_L += -DUSE_LUAJIT
 else
-CONTRIBS += lua/src
+CONTRIBS += lua_5.4/src
 endif
 CONTRIB_LIBS += $(LIBLUA)
 endif

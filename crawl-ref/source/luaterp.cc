@@ -28,8 +28,8 @@ static int _incomplete(lua_State *ls, int status)
     {
         size_t lmsg;
         const char *msg = lua_tolstring(ls, -1, &lmsg);
-        const char *tp = msg + lmsg - (sizeof(LUA_QL("<eof>")) - 1);
-        if (strstr(msg, LUA_QL("<eof>")) == tp)
+        const char *tp = msg + lmsg - (sizeof("'<eof>'") - 1);
+        if (strstr(msg, "'<eof>'") == tp)
         {
             lua_pop(ls, 1);
             return 1;

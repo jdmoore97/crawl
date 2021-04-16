@@ -372,7 +372,7 @@ static int l_spells_describe(lua_State *ls)
 }
 
 
-static const struct luaL_reg spells_clib[] =
+static const struct luaL_Reg spells_clib[] =
 {
     { "memorised"     , l_spells_memorised },
     { "letter"        , l_spells_letter },
@@ -401,5 +401,12 @@ static const struct luaL_reg spells_clib[] =
 
 void cluaopen_spells(lua_State *ls)
 {
-    luaL_openlib(ls, "spells", spells_clib, 0);
+    //luaL_openlib(ls, "spells", spells_clib, 0);
+    lua_getglobal(ls, "spells");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, spells_clib, 0);
+    lua_setglobal(ls, "spells");
 }

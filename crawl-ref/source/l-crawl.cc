@@ -826,7 +826,7 @@ static int crawl_regex_equals(lua_State *ls)
     lua_pushboolean(ls, **pattern == **arg);
     return 1;
 }
-static const luaL_reg crawl_regex_ops[] =
+static const luaL_Reg crawl_regex_ops[] =
 {
     { "matches",        crawl_regex_find },
     { "equals",         crawl_regex_equals },
@@ -910,7 +910,7 @@ static int crawl_messf_equals(lua_State *ls)
     return 1;
 }
 
-static const luaL_reg crawl_messf_ops[] =
+static const luaL_Reg crawl_messf_ops[] =
 {
     { "matches",        crawl_messf_matches },
     { "equals",         crawl_messf_equals },
@@ -1341,7 +1341,10 @@ static int crawl_err_trace(lua_State *ls)
     {
         // This code from lua.c:traceback() (mostly)
         (void) lua_tostring(ls, 1);
-        lua_getfield(ls, LUA_GLOBALSINDEX, "debug");
+        //lua_getfield(ls, LUA_GLOBALSINDEX, "debug");
+        lua_pushglobaltable(ls);
+        lua_getfield(ls, -1, "debug");
+        lua_remove(ls,-2);
         if (!lua_istable(ls, -1))
         {
             lua_pop(ls, 1);
@@ -1468,7 +1471,7 @@ static int crawl_version(lua_State *ls)
     return 1;
 }
 
-static const struct luaL_reg crawl_clib[] =
+static const struct luaL_Reg crawl_clib[] =
 {
     { "mpr",                crawl_mpr },
     { "formatted_mpr",      crawl_formatted_mpr },
@@ -1551,7 +1554,14 @@ void cluaopen_crawl(lua_State *ls)
     clua_register_metatable(ls, MESSF_METATABLE, crawl_messf_ops,
                             lua_object_gc<message_filter>);
 
-    luaL_openlib(ls, "crawl", crawl_clib, 0);
+    //luaL_openlib(ls, "crawl", crawl_clib, 0);
+    lua_getglobal(ls, "crawl");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, crawl_clib, 0);
+    lua_setglobal(ls, "crawl");
 }
 
 //
@@ -1822,7 +1832,7 @@ LUAFN(crawl_rng_wrap)
 LUAWRAP(crawl_clear_message_store, clear_message_store())
 
 
-static const struct luaL_reg crawl_dlib[] =
+static const struct luaL_Reg crawl_dlib[] =
 {
 { "args", _crawl_args },
 { "mark_milestone", _crawl_milestone },
@@ -1846,5 +1856,12 @@ static const struct luaL_reg crawl_dlib[] =
 
 void dluaopen_crawl(lua_State *ls)
 {
-    luaL_openlib(ls, "crawl", crawl_dlib, 0);
+    //luaL_openlib(ls, "crawl", crawl_dlib, 0);
+    lua_getglobal(ls, "crawl");
+    if (lua_isnil(ls, -1)) {
+        lua_pop(ls, 1);
+        lua_newtable(ls);
+    }
+    luaL_setfuncs(ls, crawl_dlib, 0);
+    lua_setglobal(ls, "crawl");
 }
