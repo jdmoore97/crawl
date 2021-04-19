@@ -84,15 +84,12 @@ void clua_register_metatable(lua_State *ls, const char *tn,
         lua_settable(ls, -3);
     }
 
-    if (lr)
+    if (lr){
         //luaL_openlib(ls, nullptr, lr, 0); //OLD CALL
-        lua_getglobal(ls, nullptr);
-        if (lua_isnil(ls, -1)) {
-            lua_pop(ls, 1);
-            lua_newtable(ls);
-        }
+        lua_newtable(ls);
         luaL_setfuncs(ls, lr, 0);
-        lua_setglobal(ls, nullptr);
+        return;
+    }
 }
 
 int clua_pushcxxstring(lua_State *ls, const string &s)
