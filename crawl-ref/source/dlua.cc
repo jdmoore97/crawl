@@ -328,8 +328,9 @@ void init_dungeon_lua()
     dlua.execfile("dlua/luamark.lua", true, true);
     dlua.execfile("dlua/mapinit.lua", true, true);
 
-    lua_getglobal(dlua, "dgn_run_map");
-    luaopen_debug(dlua);
+    // lua_getglobal(dlua, "dgn_run_map");
+    // luaopen_debug(dlua);
+    luaL_requiref(dlua, "debug", luaopen_debug, 1);
     luaL_newmetatable(dlua, MAP_METATABLE);
 
     luaopen_dgnevent(dlua);

@@ -219,7 +219,7 @@ function setup_gozag_gold(e)
     end
     pile_mean = math.min(15, math.floor(3/4 * depth + 3.75))
     pile_count = crawl.random_range(pile_mean - 3, pile_mean + 3)
-    e.nsubst("' = " .. pile_count .. "=$ / -")
+    e.nsubst("' = " .. string.format("%i",pile_count) .. "=$ / -")
 end
 
 -- Set up the chaos dancing weapon for ebering_ghost_xom and

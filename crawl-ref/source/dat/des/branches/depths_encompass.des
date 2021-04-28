@@ -672,8 +672,8 @@ SUBST:    v : v:3 b:2, k : c:3 b:2
 KPROP:    l = no_cloud_gen
 :  local Z = you.absdepth()
 :  if you.absdepth() * 5 - 74 <= 0 then
-:    subst("1 = 1:" .. math.max(62 - Z * 2, 2) ..
-:             " 2:" .. math.max(60 - Z * 2, 2))
+:    subst("1 = 1:" .. string.format("%i",math.max(62 - Z * 2, 2)) ..
+:             " 2:" .. string.format("%i",math.max(60 - Z * 2, 2)))
 :  else
 :    subst("1 = 1:" .. math.max(62 - Z * 2, 2) ..
 :             " 2:" .. math.max(60 - Z * 2, 2) ..

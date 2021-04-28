@@ -125,7 +125,7 @@ function gauntlet_arena_mons_setup(e, entry, glyph)
     if n < 1 then
         e.subst(glyph .. " = .")
     else
-        e.nsubst(glyph .. " = " .. tostring(n) .. "=" .. glyph .. " / .")
+        e.nsubst(glyph .. " = " .. string.format("%i",n) .. "=" .. glyph .. " / .")
     end
 end
 

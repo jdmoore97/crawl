@@ -17,9 +17,9 @@ end
 function init_hm_decor_walldepth(e, variables)
 local a = you.absdepth() * 5
   if a - 75 > 0 then
-    e.subst(variables .. " : x:50 c:" .. a .. " b:" .. a - 75)
+    e.subst(variables .. " : x:50 c:" .. string.format("%i",a) .. " b:" .. string.format("%i",(a - 75)))
   else
-    e.subst(variables .. " : x:50 c:" .. a)
+    e.subst(variables .. " : x:50 c:" .. string.format("%i",a))
   end
 end
 

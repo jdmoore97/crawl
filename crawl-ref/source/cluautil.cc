@@ -86,9 +86,13 @@ void clua_register_metatable(lua_State *ls, const char *tn,
 
     if (lr){
         //luaL_openlib(ls, nullptr, lr, 0); //OLD CALL
-        lua_newtable(ls);
+        lua_getglobal(ls, "NULL");
+        if (lua_isnil(ls, -1)) {
+            lua_pop(ls, 1);
+            lua_newtable(ls);
+        }
         luaL_setfuncs(ls, lr, 0);
-        return;
+        lua_setglobal(ls, "NULL");
     }
 }
 

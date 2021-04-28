@@ -243,6 +243,24 @@ end
 -- values of all the chunks, this function may be called multiple
 -- times, once for each chunk.
 function dgn_run_map(...)
+  local function setfenv(fn, env)
+    local i = 1
+    while true do
+      local name = debug.getupvalue(fn, i)
+      if name == "_ENV" then
+        debug.upvaluejoin(fn, i, (function()
+          return env
+        end), 1)
+        break
+      elseif not name then
+        break
+      end
+  
+      i = i + 1
+    end
+  
+    return fn
+  end
   local map_chunk_functions = { ... }
   if #map_chunk_functions > 0 then
     local ret
@@ -253,6 +271,8 @@ function dgn_run_map(...)
     for _, map_chunk_function in ipairs(map_chunk_functions) do
       if map_chunk_function then
         ret = setfenv(map_chunk_function, env)()
+        --if setfenv then setfenv(map_chunk_function, env) end
+        --ret = map_chunk_function(env)
       end
     end
     return ret
@@ -272,7 +292,7 @@ function dgn.places_connected(map, map_glyph, test_connect, ...)
          error("Can't find coords for '" .. glyph .. "'")
       end
    end
-   return test_connect(map, unpack(points))
+   return test_connect(map, table.unpack(points))
 end
 
 function dgn.any_glyph_connected(map, ...)

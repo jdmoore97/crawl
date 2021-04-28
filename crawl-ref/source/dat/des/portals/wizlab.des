@@ -1066,7 +1066,7 @@ KFEAT:      GW = G
 KPROP:      12'def$ZL+ = no_tele_into
 {{
 graves = 28 + crawl.random2(4) + crawl.random2(4)
-nsubst("G = " .. graves .. ":G / *:.")
+nsubst("G = " .. string.format("%i",graves) .. ":G / *:.")
 lua_marker("G", portal_desc { grave = 1 })
 lua_marker("Z", portal_desc { wizard_grave = 1})
 lua_marker("W", portal_desc { desc="Zonguldrok's gravestone",
