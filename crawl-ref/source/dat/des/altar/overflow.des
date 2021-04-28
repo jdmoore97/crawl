@@ -3357,7 +3357,7 @@ MONS:   zombie
 NSUBST: D = . / E
 NSUBST: t = . / ttE
 SUBST:  E = tt.
-: nsubst( ". = " .. math.floor(you.absdepth()) .. "=1 / 1=1. / ." )
+: nsubst( ". = " .. string.format("%i", you.absdepth()) .. "=1 / 1=1. / ." )
 KFEAT:  _ = altar_yredelemnul
 COLOUR: t = lightgrey w:5 / darkgrey w:5 / brown
 TILE:   t = dngn_tree_dead
